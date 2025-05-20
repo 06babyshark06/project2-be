@@ -1,5 +1,6 @@
 package com.project.system.violation;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -10,7 +11,8 @@ public record ViolationRequest(
         String licensePlate,
         @NotNull(message = "Violation type is required")
         ViolationType violationType,
-        @NotBlank(message = "Timestamp is required")
+        @NotNull(message = "Timestamp is required")
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
         LocalDateTime timestamp
 ) {
 }
