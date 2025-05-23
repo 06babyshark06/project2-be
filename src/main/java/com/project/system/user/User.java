@@ -8,8 +8,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import java.util.List;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -27,6 +29,15 @@ public class User {
     private String phoneNumber;
     @Email(message = "This email is not correctly")
     private String email;
+    @Column(unique = true)
+    private String identityCard;
+    @Column(unique = true, nullable = false)
+    private String keycloakId;
+    private String username;
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "role")
+    private Set<String> roles;
     @OneToMany(mappedBy = "user")
     private List<Vehicle> vehicles;
 }

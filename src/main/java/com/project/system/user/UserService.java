@@ -31,4 +31,8 @@ public class UserService {
     public List<UserResponse> findUserByEmail(String email) {
         return repository.findByEmailContainingIgnoreCase(email).stream().map(mapper::toUserResponse).toList();
     }
+
+    public UserResponse findByIdentityCard(String identityCard) {
+        return repository.findByIdentityCard(identityCard).map(mapper::toUserResponse).orElseThrow(()-> new UserNotFoundException("User not found with the Identity Card: "+identityCard));
+    }
 }
