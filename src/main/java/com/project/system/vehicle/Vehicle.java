@@ -19,6 +19,7 @@ public class Vehicle {
     private Long id;
     @NotNull(message = "License plate is required")
     private String licensePlate;
+    private String vehicleType;
     @ManyToOne
     @JoinColumn(name = "userId")
     private User user;

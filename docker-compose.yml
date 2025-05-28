@@ -1,4 +1,10 @@
 services:
+  localhost:
+    image: alpine:latest
+    command: sleep infinity
+    ports:
+      - "8080:8080" # Keycloak port
+      - "8888:8888" # app
   postgres:
     container_name: Postgresql_sys
     image: postgres
@@ -6,45 +12,50 @@ services:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: 1
       PGDATA: /var/lib/postgresql/data
-    volumes:
-      - postgres:/var/lib/postgresql/data
     ports:
       - 5432:5432
-    networks:
-      - system
-    restart: unless-stopped
-
-  pgadmin:
-    container_name: pgadmin_sys
-    image: dpage/pgadmin4
-    environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin@pgadmin.org}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
-      PGADMIN_CONFIG_SERVER_MODE: 'False'
     volumes:
-      - pgadmin:/var/lib/pgadmin
-    ports:
-      - 5050:80
-    networks:
-      - system
+      - postgres_data:/var/lib/postgresql/data
+      - /postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
     restart: unless-stopped
 
   keycloak:
     container_name: keycloak_sys
     image: quay.io/keycloak/keycloak:24.0.4
-    ports:
-      - 9098:8080
     environment:
+      KC_DB: postgres
+      KC_DB_URL_HOST: postgres
+      KC_DB_URL_PORT: 5432
+      KC_DB_SCHEMA: public
+      KC_DB_USERNAME: admin
+      KC_DB_PASSWORD: 1
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: 1
     command:
-      - "start-dev"
-    networks:
-      - system
+      - start-dev
+      - --import-realm
+    volumes:
+      - ./realm-export:/opt/keycloak/data/import
+    network_mode: "service:localhost"
+    restart: unless-stopped
+    depends_on:
+      - postgres
 
-networks:
-  system:
-    driver: bridge
+  springboot-app:
+    build:
+      context: .
+    container_name: springboot-app
+    depends_on:
+      - postgres
+      - keycloak
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/violation
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: 1
+      SPRING_JPA_HIBERNATE_DDL_AUTO: validate
+      SPRING_JPA_DATABASE: postgresql
+      SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.PostgreSQLDialect
+    network_mode: "service:localhost"
+
 volumes:
-  postgres:
-  pgadmin:
+    postgres_data:

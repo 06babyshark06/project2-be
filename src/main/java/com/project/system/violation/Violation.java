@@ -21,6 +21,8 @@ public class Violation {
     private Long id;
     @Enumerated(EnumType.STRING)
     private ViolationType violationType;
+    private Boolean isApproved;
+    private Boolean isPurchased;
     @NotNull(message = "License plate is required")
     private String licensePlate;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

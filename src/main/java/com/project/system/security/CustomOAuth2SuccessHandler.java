@@ -33,11 +33,11 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
         String username = user.getAttribute("preferred_username");
         String phoneNumber=user.getAttribute("phoneNumber");
         String identityCard=user.getAttribute("identityCard");
-        String firstName=user.getAttribute("name");
+        String fullName =user.getAttribute("fullName");
         List<String> roles = (List<String>) ((Map<String, Object>) user.getAttribute("realm_access")).get("roles");
         Set<String> rolesSet = new HashSet<>(roles);
 
-        User findedUser=userRepository.findByKeycloakId(sub).orElseGet(() -> userRepository.save(User.builder().name(firstName).keycloakId(sub).identityCard(identityCard).email(email).username(username).phoneNumber(phoneNumber).build()));
+        User findedUser=userRepository.findByKeycloakId(sub).orElseGet(() -> userRepository.save(User.builder().name(fullName).keycloakId(sub).identityCard(identityCard).email(email).username(username).phoneNumber(phoneNumber).build()));
         findedUser.setRoles(rolesSet);
         userRepository.save(findedUser);
         response.sendRedirect("/");

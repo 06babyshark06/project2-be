@@ -17,17 +17,23 @@ spring:
         registration:
           keycloak:
             client-id: springboot-app
-            client-secret: olbyY0IWGJ5QTEIxG4EgjzaocEw3UFrS
+            client-secret: TIGLZ1nKr00nStozDJ9Wjpl1tVOUqksi
             scope: openid,profile,email
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
             authorization-grant-type: authorization_code
         provider:
           keycloak:
-            issuer-uri: http://localhost:9098/realms/violation-system
+            issuer-uri: http://localhost:8080/realms/violation-system
             user-name-attribute: preferred_username
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:9098/realms/violation-system
+          issuer-uri: http://localhost:8080/realms/violation-system
 
 server:
   port: 8888
+
+keycloak:
+  server-url: http://localhost:8080
+  realm: violation-system
+  client-id: springboot-app
+  client-secret: TIGLZ1nKr00nStozDJ9Wjpl1tVOUqksi
