@@ -28,6 +28,6 @@ public class ViolationService {
     }
 
     public Violation addViolation(ViolationRequest request) {
-        return repository.save(Violation.builder().licensePlate(request.licensePlate()).violationType(request.violationType()).timestamp(request.timestamp()).build());
+        return repository.save(Violation.builder().licensePlate(request.licensePlate()).violationType(request.violationType()).timestamp(request.timestamp()).isPurchased(false).isApproved(false).build());
     }
 }

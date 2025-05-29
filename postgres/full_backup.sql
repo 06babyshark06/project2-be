@@ -6150,6 +6150,12 @@ COPY public.vehicle (id, user_id, license_plate, vehicle_type) FROM stdin;
 --
 
 COPY public.violation (is_approved, is_purchased, id, "timestamp", license_plate, violation_type) FROM stdin;
+f	f	1	2025-05-12 08:15:30	29A-12345	VUOT_DEN_DO
+f	f	2	2025-05-12 09:45:10	30B-67890	DI_SAI_LAN
+f	f	3	2025-05-12 10:22:55	31C-22222	KHONG_DO_MU_BAO_HIEM
+f	f	4	2025-05-12 11:05:42	32D-33333	VUOT_DEN_DO
+f	f	5	2025-05-12 14:10:33	33E-44444	DI_SAI_LAN
+f	f	6	2025-05-12 16:55:12	34F-55555	KHONG_DO_MU_BAO_HIEM
 \.
 
 
@@ -6171,7 +6177,7 @@ SELECT pg_catalog.setval('public.vehicle_seq', 1151, true);
 -- Name: violation_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
 --
 
-SELECT pg_catalog.setval('public.violation_seq', 1, false);
+SELECT pg_catalog.setval('public.violation_seq', 51, true);
 
 
 --
