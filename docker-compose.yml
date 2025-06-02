@@ -27,7 +27,7 @@ services:
     image: quay.io/keycloak/keycloak:24.0.4
     environment:
       KC_DB: postgres
-      KC_DB_URL_HOST: 127.0.0.1
+      KC_DB_URL_HOST: localhost
       KC_DB_URL_PORT: 5432
       KC_DB_SCHEMA: public
       KC_DB_USERNAME: admin
@@ -54,7 +54,7 @@ services:
       - keycloak
       - localhost
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://127.0.0.1:5432/violation
+      SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/violation
       SPRING_DATASOURCE_USERNAME: admin
       SPRING_DATASOURCE_PASSWORD: 1
       SPRING_JPA_HIBERNATE_DDL_AUTO: validate
