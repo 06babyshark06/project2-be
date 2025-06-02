@@ -15,7 +15,6 @@ services:
       POSTGRES_PASSWORD: 1
       PGDATA: /var/lib/postgresql/data
     volumes:
-      - postgres_data:/var/lib/postgresql/data
       - ./postgres:/docker-entrypoint-initdb.d
     restart: unless-stopped
     network_mode: "service:localhost"
@@ -62,5 +61,3 @@ services:
       SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.PostgreSQLDialect
     network_mode: "service:localhost"
 
-volumes:
-    postgres_data:
