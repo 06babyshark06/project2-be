@@ -16,6 +16,7 @@ services:
       PGDATA: /var/lib/postgresql/data
     volumes:
       - ./postgres:/docker-entrypoint-initdb.d
+      - postgres_data:/var/lib/postgresql/data
     restart: unless-stopped
     network_mode: "service:localhost"
     depends_on:
@@ -61,3 +62,5 @@ services:
       SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.PostgreSQLDialect
     network_mode: "service:localhost"
 
+volumes:
+  postgres_data:
