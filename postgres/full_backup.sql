@@ -85,7 +85,7 @@ SET row_security = off;
 -- Name: admin; Type: DATABASE; Schema: -; Owner: admin
 --
 
-CREATE DATABASE admin WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE_PROVIDER = libc LOCALE = 'en_US.utf8';
+-- CREATE DATABASE admin WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE_PROVIDER = libc LOCALE = 'en_US.utf8';
 
 
 ALTER DATABASE admin OWNER TO admin;
