@@ -18,6 +18,8 @@ services:
       - postgres_data:/var/lib/postgresql/data
       - ./postgres:/docker-entrypoint-initdb.d
     restart: unless-stopped
+    networks:
+      - mynet
 
   keycloak:
     container_name: keycloak_sys
@@ -40,6 +42,8 @@ services:
     restart: unless-stopped
     depends_on:
       - postgres
+    networks:
+      - mynet
 
   springboot-app:
     build:
@@ -56,6 +60,10 @@ services:
       SPRING_JPA_DATABASE: postgresql
       SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.PostgreSQLDialect
     network_mode: "service:localhost"
+    networks:
+      - mynet
 
 volumes:
     postgres_data:
+networks:
+  mynet:
