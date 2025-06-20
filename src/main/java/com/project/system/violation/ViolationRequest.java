@@ -13,6 +13,7 @@ public record ViolationRequest(
         ViolationType violationType,
         @NotNull(message = "Timestamp is required")
         @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-        LocalDateTime timestamp
+        LocalDateTime timestamp,
+        String location
 ) {
 }

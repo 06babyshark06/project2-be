@@ -27,4 +27,5 @@ public class Violation {
     private String licensePlate;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime timestamp;
+    private String location;
 }
