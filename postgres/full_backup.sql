@@ -8,11 +8,17 @@ SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 
 --
--- Roles
+-- Drop databases (except postgres and template1)
 --
 
--- CREATE ROLE admin;
--- ALTER ROLE admin WITH SUPERUSER INHERIT CREATEROLE CREATEDB LOGIN REPLICATION BYPASSRLS PASSWORD 'SCRAM-SHA-256$4096:B5iplo0Gbdgs9N9vZGIeDg==$+SN993aWdkfSImhrM76hMiJy2MUivC8ek6wBoFhgAnI=:TgZD4rcrmCWo2WvybAgOvsxmRzuivSy94RPvkFM3e7U=';
+
+
+
+
+
+--
+-- Drop roles
+--
 
 --
 -- User Configurations
@@ -33,14 +39,37 @@ SET standard_conforming_strings = on;
 -- Database "template1" dump
 --
 
-\connect template1
-
 --
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 17.4 (Debian 17.4-1.pgdg120+2)
--- Dumped by pg_dump version 17.4 (Debian 17.4-1.pgdg120+2)
+-- Dumped from database version 17.5 (Debian 17.5-1.pgdg120+1)
+-- Dumped by pg_dump version 17.5 (Debian 17.5-1.pgdg120+1)
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+UPDATE pg_catalog.pg_database SET datistemplate = false WHERE datname = 'template1';
+DROP DATABASE template1;
+--
+-- Name: template1; Type: DATABASE; Schema: -; Owner: admin
+--
+
+CREATE DATABASE template1 WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE_PROVIDER = libc LOCALE = 'en_US.utf8';
+
+
+ALTER DATABASE template1 OWNER TO admin;
+
+\connect template1
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -55,6 +84,42 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
+-- Name: DATABASE template1; Type: COMMENT; Schema: -; Owner: admin
+--
+
+COMMENT ON DATABASE template1 IS 'default template for new databases';
+
+
+--
+-- Name: template1; Type: DATABASE PROPERTIES; Schema: -; Owner: admin
+--
+
+ALTER DATABASE template1 IS_TEMPLATE = true;
+
+
+\connect template1
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: DATABASE template1; Type: ACL; Schema: -; Owner: admin
+--
+
+REVOKE CONNECT,TEMPORARY ON DATABASE template1 FROM PUBLIC;
+GRANT CONNECT ON DATABASE template1 TO PUBLIC;
+
+
+--
 -- PostgreSQL database dump complete
 --
 
@@ -66,8 +131,8 @@ SET row_security = off;
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 17.4 (Debian 17.4-1.pgdg120+2)
--- Dumped by pg_dump version 17.4 (Debian 17.4-1.pgdg120+2)
+-- Dumped from database version 17.5 (Debian 17.5-1.pgdg120+1)
+-- Dumped by pg_dump version 17.5 (Debian 17.5-1.pgdg120+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -85,7 +150,6 @@ SET row_security = off;
 -- Name: admin; Type: DATABASE; Schema: -; Owner: admin
 --
 
--- CREATE DATABASE admin WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE_PROVIDER = libc LOCALE = 'en_US.utf8';
 
 
 ALTER DATABASE admin OWNER TO admin;
@@ -116,8 +180,8 @@ SET row_security = off;
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 17.4 (Debian 17.4-1.pgdg120+2)
--- Dumped by pg_dump version 17.4 (Debian 17.4-1.pgdg120+2)
+-- Dumped from database version 17.5 (Debian 17.5-1.pgdg120+1)
+-- Dumped by pg_dump version 17.5 (Debian 17.5-1.pgdg120+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -5923,14 +5987,36 @@ ALTER TABLE ONLY public.identity_provider_config
 -- Database "postgres" dump
 --
 
-\connect postgres
-
 --
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 17.4 (Debian 17.4-1.pgdg120+2)
--- Dumped by pg_dump version 17.4 (Debian 17.4-1.pgdg120+2)
+-- Dumped from database version 17.5 (Debian 17.5-1.pgdg120+1)
+-- Dumped by pg_dump version 17.5 (Debian 17.5-1.pgdg120+1)
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+DROP DATABASE postgres;
+--
+-- Name: postgres; Type: DATABASE; Schema: -; Owner: admin
+--
+
+CREATE DATABASE postgres WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE_PROVIDER = libc LOCALE = 'en_US.utf8';
+
+
+ALTER DATABASE postgres OWNER TO admin;
+
+\connect postgres
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -5945,6 +6031,13 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
+-- Name: DATABASE postgres; Type: COMMENT; Schema: -; Owner: admin
+--
+
+COMMENT ON DATABASE postgres IS 'default administrative connection database';
+
+
+--
 -- PostgreSQL database dump complete
 --
 
@@ -5956,8 +6049,8 @@ SET row_security = off;
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 17.4 (Debian 17.4-1.pgdg120+2)
--- Dumped by pg_dump version 17.4 (Debian 17.4-1.pgdg120+2)
+-- Dumped from database version 17.5 (Debian 17.5-1.pgdg120+1)
+-- Dumped by pg_dump version 17.5 (Debian 17.5-1.pgdg120+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -6080,7 +6173,8 @@ CREATE TABLE public.violation (
     "timestamp" timestamp(6) without time zone,
     license_plate character varying(255) NOT NULL,
     violation_type character varying(255),
-    CONSTRAINT violation_violation_type_check CHECK (((violation_type)::text = ANY ((ARRAY['VUOT_DEN_DO'::character varying, 'DI_SAI_LAN'::character varying, 'KHONG_DO_MU_BAO_HIEM'::character varying])::text[])))
+    location character varying(255),
+    CONSTRAINT violation_violation_type_check CHECK (((violation_type)::text = ANY ((ARRAY['VUOT_DEN_DO'::character varying, 'DI_SAI_LAN'::character varying, 'KHONG_DO_MU_BAO_HIEM'::character varying, 'DUNG_XE_TREN_VACH_DANH_CHO_NGUOI_DI_BO'::character varying])::text[])))
 );
 
 
@@ -6142,6 +6236,8 @@ COPY public.vehicle (id, user_id, license_plate, vehicle_type) FROM stdin;
 1051	53	32D-33333	SUV
 1101	54	33E-44444	Motorbike
 1151	54	34F-55555	Car
+1201	53	29A12345	CAR
+1251	54	90LD00322	MOTORCYCLE
 \.
 
 
@@ -6149,13 +6245,10 @@ COPY public.vehicle (id, user_id, license_plate, vehicle_type) FROM stdin;
 -- Data for Name: violation; Type: TABLE DATA; Schema: public; Owner: admin
 --
 
-COPY public.violation (is_approved, is_purchased, id, "timestamp", license_plate, violation_type) FROM stdin;
-f	f	1	2025-05-12 08:15:30	29A-12345	VUOT_DEN_DO
-f	f	2	2025-05-12 09:45:10	30B-67890	DI_SAI_LAN
-f	f	3	2025-05-12 10:22:55	31C-22222	KHONG_DO_MU_BAO_HIEM
-f	f	4	2025-05-12 11:05:42	32D-33333	VUOT_DEN_DO
-f	f	5	2025-05-12 14:10:33	33E-44444	DI_SAI_LAN
-f	f	6	2025-05-12 16:55:12	34F-55555	KHONG_DO_MU_BAO_HIEM
+COPY public.violation (is_approved, is_purchased, id, "timestamp", license_plate, violation_type, location) FROM stdin;
+f	f	2	2025-06-21 21:18:11	29A12345	VUOT_DEN_DO	lakecheyenne
+f	f	3	2025-06-21 21:21:17	90LD00322	DUNG_XE_TREN_VACH_DANH_CHO_NGUOI_DI_BO	Nguyen Du street, HCM
+f	f	4	2025-06-21 21:21:26	29A12345	VUOT_DEN_DO	lakecheyenne
 \.
 
 
@@ -6170,7 +6263,7 @@ SELECT pg_catalog.setval('public.app_user_seq', 101, true);
 -- Name: vehicle_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
 --
 
-SELECT pg_catalog.setval('public.vehicle_seq', 1151, true);
+SELECT pg_catalog.setval('public.vehicle_seq', 1251, true);
 
 
 --
