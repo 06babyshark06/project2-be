@@ -48,7 +48,7 @@ public class UserController {
         return ResponseEntity.ok(service.findUserByEmail(email));
     }
     @GetMapping("/token/{access-token}")
-    public ResponseEntity<String> insert(@PathVariable("access-token") String token) {
+    public ResponseEntity<UserResponse> insert(@PathVariable("access-token") String token) {
         Jwt jwt = jwtDecoder.decode(token);
         String username = jwt.getClaimAsString("preferred_username");
         String email = jwt.getClaimAsString("email");
@@ -65,7 +65,7 @@ public class UserController {
                         .collect(Collectors.toSet()))
                 .orElse(Collections.emptySet());
 
-        service.syncUser(username, email, sub, phoneNumber, identityCard, fullName, roles);
-        return ResponseEntity.ok("OK");
+        UserResponse user = service.syncUser(username, email, sub, phoneNumber, identityCard, fullName, roles);
+        return ResponseEntity.ok(user);
     }
 }

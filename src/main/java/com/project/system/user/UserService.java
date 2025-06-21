@@ -36,7 +36,8 @@ public class UserService {
     public UserResponse findByIdentityCard(String identityCard) {
         return repository.findByIdentityCard(identityCard).map(mapper::toUserResponse).orElseThrow(()-> new UserNotFoundException("User not found with the Identity Card: "+identityCard));
     }
-    public User syncUser(String username, String email, String sub, String phoneNumber, String identityCard, String fullName, Set<String> roles) {
-        return repository.findByUsername(username).orElseGet(() -> repository.save(User.builder().name(fullName).phoneNumber(phoneNumber).username(username).email(email).keycloakId(sub).identityCard(identityCard).roles(roles).build()));
+    public UserResponse syncUser(String username, String email, String sub, String phoneNumber, String identityCard, String fullName, Set<String> roles) {
+        User user= repository.findByUsername(username).orElseGet(() -> repository.save(User.builder().name(fullName).phoneNumber(phoneNumber).username(username).email(email).keycloakId(sub).identityCard(identityCard).roles(roles).build()));
+        return mapper.toUserResponse(user);
     }
 }
